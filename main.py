@@ -96,6 +96,26 @@ def update_screen(moves, current, screen=screen, grid=mesh):
     pygame.display.update()
 
 
+def strike(place):
+    ''' prints strikes the winning move '''
+    if place == (1, 2, 3):
+        screen.blit(pygame.image.load('images/r1.png'), (100, 100))
+    elif place == (4, 5, 6):
+        screen.blit(pygame.image.load('images/r2.png'), (100, 100))
+    elif place == (7, 8, 9):
+        screen.blit(pygame.image.load('images/r3.png'), (100, 100))
+    elif place == (1, 4, 7):
+        screen.blit(pygame.image.load('images/c1.png'), (100, 100))
+    elif place == (2, 5, 8):
+        screen.blit(pygame.image.load('images/c2.png'), (100, 100))
+    elif place == (3, 6, 9):
+        screen.blit(pygame.image.load('images/c3.png'), (100, 100))
+    elif place == (1, 5, 9):
+        screen.blit(pygame.image.load('images/d1.png'), (100, 100))
+    elif place == (3, 5, 7):
+        screen.blit(pygame.image.load('images/d2.png'), (100, 100))
+
+
 def check_winner(moves):
     to_win = ((1, 2, 3), (4, 5, 6), (7, 8, 9), (1, 4, 7),
               (2, 5, 8), (3, 6, 9), (1, 5, 9), (3, 5, 7))
@@ -115,6 +135,7 @@ def check_winner(moves):
                 else:
                     break
             if count == 3:
+                strike(elem)
                 return player
     if len(players['0']) + len(players['*']) == 9:
         return 'Its a Draw'
@@ -150,15 +171,19 @@ def game_loop(main_screen=screen, width=width, lenght=length, board=board):
         win = check_winner(moves)
         if win == '0':
             print('player 1 wins')
+            screen.blit(pygame.image.load('images/1wins.png'), (0, 0))
+            pygame.display.update()
             time.sleep(2)
             break
         elif win == '*':
             print('player 2 wins')
+            screen.blit(pygame.image.load('images/2wins.png'), (0, 0))
+            pygame.display.update()
             time.sleep(2)
             break
         elif win == 'Its a Draw':
             print('Its a Draw')
-            time.sleep(2)
+            # time.sleep(2)
             break
         pygame.display.update()
         clock.tick(15)
